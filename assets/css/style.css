@@ -1,0 +1,29 @@
+#addData {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	background-color: white;
+	border : 1px solid black;
+	border-radius : 0 3px 3px 0;
+	z-index: 5000;
+lay:none;	
+}
+
+#dataForm {
+	min-height: 250px;
+}
+
+#dataForm input{
+	font-size: 16px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+#dataForm textarea{
+	font-size: 16px;
+	border-radius: 3px;
+}
+
+#dataForm .btn{
+	margin-top: 15px;
+}
