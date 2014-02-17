@@ -26,64 +26,7 @@
     <script type="text/javascript"
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAoWYFIMMxFCQZPefMrPRfGfBEnJZ8UI5M&sensor=false&language=fr">
     </script>
-    <script type="text/javascript">
-      function initialize() {
-        var mapOptions = {
-          center: new google.maps.LatLng(44.382, 3.544),
-          zoom: 15
-        };
-        
-        var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
-
-
-		//All position of risk
-	    var tabMarkers = new Array();
-        
-        //Remove a marker
-        marker.setMap(null);
-
-        
-		//Adddata form display 
-		  var contentString = 
-	  '<div id="content">'+
-	      '<div id="siteNotice">'+
-	      '</div>'+
-	      '<h2 id="firstHeading" class="firstHeading">Signaler un risque</h2>'+
-	      ''+
-		      '<form id="dataForm">'+
-			  '		<input type="hidden" name="gps" value="">'+
-			  '			<input class="col-lg-12" type="text" placeholder="Titre" name="title"><br/>'+
-			  '			<textarea class="col-lg-12" rows="8"  name="comments" placeholder="Description du risque"></textarea>' +
-			  '<input class="btn center-block" type="submit" name="nom" value="Envoyer">'+
-			  '</form>'+
-	      ''+
-      '</div>';
-
-      var infowindow = new google.maps.InfoWindow({
-          content: contentString
-      });	
-      }
-
-      //Event to add a position on the map
-      google.maps.event.addListener(map, 'rightclick', function(event) {
-
-      	var newMarker = new google.maps.Marker({
-  			position: event.latLng, //coordonnée de la position du clic sur la carte
-  			map: map,
-  			draggable:true,
-  			animation: google.maps.Animation.DROP,
-  			title: 'Risque'
-  		})
-      	
-          //We add a marker into the marker tab
-      	tabMarkers.push(newMarker);
-
-          //Formulaire sur le marker
-          infowindow.open(map, newMarker); //we display the add data form on the last created marker
-        });
-      
-      google.maps.event.addDomListener(window, 'load', initialize);
-    </script>
+    <script type="text/javascript" src="<?php echo js_url('maps');?>"></script>
   </head>
   <body>
 <!-- MAP -->
