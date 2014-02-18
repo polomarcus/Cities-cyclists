@@ -31,8 +31,8 @@ class Index extends CI_Controller {
 	public function addMarker(){
 
 		//Form rules
-		$this->form_validation->set_rules('title', 'title', 'trim|min_length[1]|max_length[50]|encode_php_tags|xss_clean');
-		$this->form_validation->set_rules('comment', 'comment', 'trim|min_length[3]|max_length[50]|encode_php_tags|xss_clean');
+		$this->form_validation->set_rules('title', 'title', 'trim|min_length[1]|max_length[100]|encode_php_tags|xss_clean');
+		$this->form_validation->set_rules('comment', 'comment', 'trim|min_length[3]|max_length[1000]|encode_php_tags|xss_clean');
 		$this->form_validation->set_rules('gps', 'gps', 'trim|min_length[3]|max_length[100]|encode_php_tags|xss_clean');
 
 		
@@ -43,7 +43,7 @@ class Index extends CI_Controller {
 			$comment = $this->input->post('comment');
 
 			$this->markerModel->addMarker($gps, $title, $comment);
-			$output = 'Votre marker a été ajouté. Merci :)';
+			$output = 1;
 		}
 		else{ //Erreur formulaire
 			$output = -1;
