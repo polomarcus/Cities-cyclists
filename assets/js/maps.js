@@ -30,12 +30,12 @@
         
            var map = new google.maps.Map(document.getElementById("map-canvas"),
                  mapOptions);
-
+           
 	      //Event to add a position on the map
 	      google.maps.event.addListener(map, 'rightclick', function(event) {
-				placeMarker(event.latLng); //new marker
+		       	
+				placeMarker(event.latLng); //new marker	
 				
-		        /***************************************************/
 				//Adddata form display 
 				  var contentForm = 
 					  '<div id="content">'+
@@ -46,27 +46,24 @@
 						      '<form id="dataForm" method="post" action="#">'+
 						      '<input type="hidden" name="gps" id="gps" value="' + theMarker.getPosition().toString() + '">'+
 							  '		<input class="col-lg-12" type="text" id="title" placeholder="Titre" name="title"><br/>'+
-							  '		<textarea class="col-lg-12" rows="8" id="comment" name="comment" placeholder="Description du risque"></textarea>' +
-							  '<input class="btn center-block" id="submitData" value="Envoyer" onclick="addMarker()">'+
+							  '		<textarea class="col-lg-12" rows="8" id="comment" name="comment" placeholder="Description du risque : Vitesse des voitures, espace insuffisant, dangereux par temps de pluie..."></textarea>' +
+
+						      '<div class="col-lg-12">' +
+						      	'<input class="btn btn-default center-block" id="submitData" value="Envoyer" onclick="addMarker()">'+
+							  '</div>' +
 							  '</form>'+
 					      ''+
 				      '</div>';
-	
+
 			      var infowindow = new google.maps.InfoWindow({
 			          content: contentForm,
 			          maxWidth: 400
 			      });	
 			      /***************************************************/
-	
-	        	infowindow.open(map, theMarker); //we display the add data form on the last created marker
-	    		
+
+			      infowindow.open(map, theMarker); //we display the add data form on the last created marker
 	        });
-	      
-		     //Close the data form
-		     google.maps.event.addListener(map, 'rightclick', function() {
-		    	 //theMarker.setMap(null);
-		     });
-		     
+	     		     
 	
 	     /** Place a new marker on the map when a click happens*/
 	     function placeMarker(location) {
@@ -84,7 +81,8 @@
 		  			title: 'Risque potentiel'
 		  		})
 			}
-	
+
+			
 			//place the marker on the map
 			theMarker.setMap(map);
 	     }
@@ -100,24 +98,16 @@
 			    	    
 			    	  for (i = 0; i< obj.length; i++) {
 			    		  //Ajout des markers dans le tableau
-			    		  //console.log(obj[i].gps);
-			    		  addMarkers(obj[i].gps, obj[i].title, obj[i].comment)
-			    		  
-			    		 setTimeout(function(){
-			    			 console.log("wait");
-			    		 }
-			    				 ,
-			    				 5000);
-			    	  }
-			    	  
-			    	  
+			    		  console.log(obj[i].date);
+			    		  addMarkers(obj[i].gps, obj[i].title, obj[i].comment, obj[i].date);
+			    	  }  
 			      },
 	   		})
 	     }
 	     
 	     /** add markers in the marker array */
 	     /** gps loaded from the DB */
-	     function addMarkers(gps, title, comment) {
+	     function addMarkers(gps, title, comment, date) {
 	    	 
 	    	 //Parse (43.60227297869274, 3.8527679443359375) into 43... and 3....
 	    	 array = gps.split(',');
@@ -141,6 +131,7 @@
 		          content: '<div class="displayData">'+
 			          		   '<h2>' + title + '</h2>'+
 			          		   '<p>' + comment + '</p>'+
+			          		   '<p class="pull-right"><i>' + date + '</i></p>'+
 		          		   '</div>',
 		          maxWidth: 400
 		      });	
@@ -180,9 +171,9 @@
       } //Initialize close
 
       
-      /** Send the form in AJAX */
+      /** Send the form in AJAX to save into the DB */
       function addMarker(event){ 	
-  		console.log("AddMarker");
+//  		console.log("AddMarker");
   		
      	title = $('#title').val();
      	comment = $('#comment').val();
@@ -194,7 +185,8 @@
     	   	   	data: {"title" : title, "comment" : comment, "gps" : gps},
  		      success: function(response) {
  		    	  if (response == 1){
- 		    		  
+ 		    		  $("#ansForm").html('Merci de votre participation :)');
+ 		    		// infowindow.close();
  		    	  }
  		    	  else  {
  		    		  alert('Une erreur s\'est produite...');

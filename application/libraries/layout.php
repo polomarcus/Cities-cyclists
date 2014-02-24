@@ -15,7 +15,7 @@ class Layout
     {
         $this->CI = get_instance();
          
-        $this->var['outputTop'] = ''; // all default views (menu, header.)
+        $this->var['header'] = ''; // all default views (menu, header.)
         $this->var['content'] ='';    // all inside page content
         $this->var['footer'] ='';     // all footer
         
@@ -28,8 +28,8 @@ class Layout
         $this->var['css'][] = css_url("style");     
         
         //Vues ajoutées par défaut :
-        $this->var['outputTop'] .= $this->CI->load->view('default/header', $data = array(), true);
-        $this->var['outputTop'] .= $this->CI->load->view('default/menu', $data = array(), true);
+        $this->var['header'] .= $this->CI->load->view('default/header', $data = array(), true);
+        $this->var['header'] .= $this->CI->load->view('default/menu', $data = array(), true);
     }
      
 /*
