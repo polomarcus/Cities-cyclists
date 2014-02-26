@@ -8,7 +8,7 @@
       
     </style>
     
-	<title>Cyclistes de Montpellier</title>
+	<title>Cyclistes des villes</title>
 	<link rel="shortcut icon" href="assets/img/bike.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!-- Bootstrap -->

@@ -1,15 +1,3 @@
-
-      /*
-      To do:
-
-          Base de donnée
-          AJAX (ajout + chargement)
-          Remove markers when empty
-          Quand on clique ça ouvre les informations
-      
-      
-      */
-      
       function initialize() {
         var theMarker = null; // THE marker, displayed on a user click
     	var markers = []; // this array will receive all the markers from the DB in ajax.
@@ -98,7 +86,6 @@
 			    	    
 			    	  for (i = 0; i< obj.length; i++) {
 			    		  //Ajout des markers dans le tableau
-			    		  console.log(obj[i].date);
 			    		  addMarkers(obj[i].gps, obj[i].title, obj[i].comment, obj[i].date);
 			    	  }  
 			      },
@@ -113,6 +100,11 @@
 	    	 array = gps.split(',');
 	    	 array0 = array[0].split('(');
 	    	 array1 = array[1].split(')');
+	    	 
+	    	 //Parse date 2014-02-18 21:07:44 to 18-02-2014
+	    	 date = date.split('-');
+	    	 dateTmp = date[2].split(' ');
+	    	 date[2] = dateTmp[0];
 	    	 
 	    	 //Gps position object for google map API
 	    	 gps = new  google.maps.LatLng(parseFloat(array0[1]), parseFloat(array1[0]));
@@ -131,7 +123,7 @@
 		          content: '<div class="displayData">'+
 			          		   '<h2>' + title + '</h2>'+
 			          		   '<p>' + comment + '</p>'+
-			          		   '<p class="pull-right"><i>' + date + '</i></p>'+
+			          		   '<p class="pull-right"><i>Le ' + date[2] + '/' + date[1] + '/' + date[0] + '</i></p>'+
 		          		   '</div>',
 		          maxWidth: 400
 		      });	
@@ -198,3 +190,5 @@
       }
         
       google.maps.event.addDomListener(window, 'load', initialize);
+		console.log("Hello :), je cherche un job worldwide à partir de l'été 2014. On pourrait se rencontrer autour d'un verre pour parler web ou d'autre chose sur Montpellier, t'as mon twitter : @polomarcus");
+		
