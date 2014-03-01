@@ -1,8 +1,7 @@
-Cycliste des villes
+Cyclistes des villes
 ========
 
-Cycliste de Montpellier
-
+Cyclistes de Montpellier !
 
 Enfin sur vos écrans d'ordinateur, une application web pour cibler les zones à risque pour les cyclistes. 
 
