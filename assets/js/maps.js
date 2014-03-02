@@ -22,7 +22,7 @@
 									  '<textarea class="col-lg-12" rows="8" id="comment" name="comment" placeholder="Description du risque : Vitesse des voitures, espace insuffisant, dangereux par temps de pluie..."></textarea>' +
 					
 								      '<div class="col-lg-12">' +
-								      	'<input class="btn btn-default center-block" id="submitData" value="Envoyer" onclick="addMarker()">'+
+								      	'<input class="btn btn-primary center-block" id="submitData" value="Envoyer" onclick="addMarker()">'+
 									  '</div>' +
 								  '</form>'+
 							'</div>'; 
@@ -64,7 +64,7 @@
 	    	
 	    	
 	    	date = dateFormat("Y-m-d H:i:s") //2014-02-18 21:07:44
-	    	console.log(gps);
+
 	    	if(gps){ //if not empty we add the marker
 	    		addMarkers(gps, title, comment, date);
 	    		//we delete the new marker to add on the current map
@@ -141,7 +141,7 @@
 		          content: '<div class="displayData">'+
 			          		   '<h2>' + title + '</h2>'+
 			          		   '<p>' + comment + '</p>'+
-			          		   '<p class="pull-right"><i>Le ' + date[2] + '/' + date[1] + '/' + date[0] + '</i></p>'+
+			          		   '<p class="bottom0"><i>Le ' + date[2] + '/' + date[1] + '/' + date[0] + '</i></p>'+
 		          		   '</div>',
 		          maxWidth: 400
 		      });	
@@ -183,11 +183,11 @@
       function addMarker(event){ 	
 //  		console.log("AddMarker");
   		
+    	//Date for the AJAX form
      	title = $('#title').val();
      	comment = $('#comment').val();
      	gps = $('#gps').val();
      	
-
     		$.ajax({
     	   		url : "/Cycliste/index.php/index/addMarker",
     	   	   	type : "POST",
@@ -195,14 +195,19 @@
  		      success: function(response) {
  		    	  if (response == 1){
  		    		  $("#ansForm").html('Merci de votre participation :) <br/> Cette zone est maintenant signalé sur la carte.');
- 		    		// infowindow.close();
  		    	  }
  		    	  else  {
  		    		 $("#ansForm").html('Une erreur s\'est produite (titre absent, commentaires trop court, point déjà ajouté...), mais vous allez y arriver !');
  		    	  }
  		      },
     		});
-
+    		
+    		//replace html of the form
+    		$("#content").html('<div class="displayData">'+
+							   		   '<h2>' + title + '</h2>'+
+							  		   '<p>' + comment + '</p>'+
+								   '</div>');
+    		
          	//new marker on the current map
          	$('#newGPS').val(gps); //validate new marker on the current map
          	$('#newTitle').val(title); //validate new marker on the current map
@@ -213,7 +218,7 @@
          	
             setTimeout(function() {
             	$('#ansDiv').fadeOut(800)
-              }, 5000);
+              }, 8000);
          
     		return false;
       }

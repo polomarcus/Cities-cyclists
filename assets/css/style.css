@@ -1,9 +1,6 @@
-body {
-	background-color: white;
-}
 #map-canvas {
 	padding : 20px;	
-	height: 85%;
+	height: 88%;
 }
 
 #header {
@@ -22,6 +19,7 @@ h2 {
 	margin-top: 5px;
 }
 #footer {
+
 	margin-top: 5px;
 	text-align: center;
 	margin-bottom: 0px;
@@ -91,6 +89,19 @@ lay:none;
 	min-width: 300px;
 }
 
+#content input {
+	margin-bottom: 5px;
+}
+
+#content textarea {
+	margin-bottom: 5px;
+}
+
+.bottom0 {
+	position:absolute;
+	bottom:0;
+	right:0;
+}
 /* all */
 ::-webkit-input-placeholder { font-size: 15px; }
 ::-moz-placeholder { font-size: 15px;  } /* firefox 19+ */
