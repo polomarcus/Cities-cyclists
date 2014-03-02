@@ -24,6 +24,8 @@ h2 {
 #footer {
 	margin-top: 5px;
 	text-align: center;
+	margin-bottom: 0px;
+	padding-bottom: 0px;
 }
 
 #footer p {
@@ -36,6 +38,23 @@ h2 {
 #footer .social {
 
 }
+
+#ansDiv {
+	background-color: #0489B1;
+	border-radius: 0px 0px 5px 5px;
+/* 	height:19px; */
+}
+
+#ansDiv p{
+	text-align:center;
+}
+
+#ansDiv span{
+	color: white;
+	font-weight:bold;
+	font-size:15px;
+}
+
 #addData {
 	position: fixed;
 	bottom: 0;
@@ -68,12 +87,12 @@ lay:none;
 
 .displayData {
 	padding: 30px;
+	min-height: 250px;
+	min-width: 300px;
 }
 
-.displayData h2{
-	
-}
-
-.displayData p{
-	
-}
+/* all */
+::-webkit-input-placeholder { font-size: 15px; }
+::-moz-placeholder { font-size: 15px;  } /* firefox 19+ */
+:-ms-input-placeholder { font-size: 15px;  } /* ie */
+input:-moz-placeholder { font-size: 15px;  }

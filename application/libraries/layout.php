@@ -16,6 +16,7 @@ class Layout
         $this->CI = get_instance();
          
         $this->var['header'] = ''; // all default views (menu, header.)
+        $this->var['answer'] ='';    // the answer when the user used a form
         $this->var['content'] ='';    // all inside page content
         $this->var['footer'] ='';     // all footer
         
@@ -29,6 +30,7 @@ class Layout
         
         //Vues ajoutées par défaut :
         $this->var['header'] .= $this->CI->load->view('default/header', $data = array(), true);
+        $this->var['answer'] .= $this->CI->load->view('default/answer', $data = array(), true);
         $this->var['header'] .= $this->CI->load->view('default/menu', $data = array(), true);
     }
      

@@ -4,6 +4,9 @@ class Marker_model extends CI_Model {
 	var $table = 'marker'; //table BD
 	
 	
+	/*******************************************************/
+	/*						GETTERS						   */
+	/*******************************************************/	
 	/**
 	 * @return all the markers
 	 * @param  limit the number of return $nb
@@ -18,7 +21,23 @@ class Marker_model extends CI_Model {
 		->result();
 	}
 	
+	/**
+	 * @return the date on a point with this GPS
+	 * use to see if there is already a marker on this GPS position
+	 * @param  $gps (ex: (12321.21, 12321.432)
+	 */
+	public function getMarkerGPS($gps)
+	{
+		return $this->db->select('*')
+		->from($this->table)
+		->where('gps', $gps)
+		->get()
+		->result();
+	}
 	
+	
+	/* 			TO DO 						*/
+	/*			STATS PART					*/
 	/**
 	 * @return all data on motion between 2 dates
 	 * @param  $date (ex: AAAA-MM-JJ)
@@ -32,6 +51,8 @@ class Marker_model extends CI_Model {
 		->get()
 		->result();
 	}
+	
+	
 	/**
 	 * @return all data on motion of the month
 	 * @param  $month (ex: MM)
@@ -56,6 +77,12 @@ class Marker_model extends CI_Model {
 		->result();
 	}
 	
+	
+	
+	/*******************************************************/
+	/*						SETTERS						   */
+	/*******************************************************/
+	
 	/**
 	 * add a new marker
 	 * @return the id just created
@@ -74,6 +101,5 @@ class Marker_model extends CI_Model {
 	
 		// new ID created
 		return $this->db->insert_id();
-	}
-	
+	}	
 }

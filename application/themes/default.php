@@ -43,9 +43,15 @@
 			<?php echo $header; ?>
 	</div>
 	
-<!-- MAP -->
-	<div id="map-canvas"></div>
+	
+	<div id="ansDiv" style="display:none;">
+		<?php echo $answer; ?>
+	</div>
+	
+	
+	<?php echo $content; ?>
 
+	
 	<div class="container">
 		<?php echo $footer; ?>
 	</div>
