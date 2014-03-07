@@ -25,7 +25,7 @@
     <![endif]-->
 	    
     <script type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAoWYFIMMxFCQZPefMrPRfGfBEnJZ8UI5M&sensor=false&language=fr">
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAucOheL_Stye4n_pyHgIAAZJ6JtLjH7QU&sensor=true&language=fr">
     </script>
     <script type="text/javascript" src="<?php echo js_url('maps');?>"></script>
   </head>
@@ -52,23 +52,9 @@
 	<?php echo $content; ?>
 
 	
-	<div class="container">
+	<div  class="container " style="position: relative;">
 		<?php echo $footer; ?>
 	</div>
-    <!-- Placed at the end of the document so the pages load faster -->
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://code.jquery.com/jquery.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="assets/js/bootstrap.min.js"></script>
-      
-    <script src="assets/js/menuActive.js"></script>  
-    <script type="text/javascript" src="<?php echo js_url('addPosition');?>"></script> 
-    <!-- special scripts -->
-    <?php foreach($js as $url): ?>
-    <script type="text/javascript" src="<?php echo $url; ?>"></script> 
-	<?php endforeach; ?>
-	
-	
 <!-- 	Modal help  -->
 	<!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -82,7 +68,7 @@
        	<h2>Vous cherchez de l'aide ?</h2>
        	<p>Voici les commandes</p>
        	<ul>
-       		<li><b>Clique droite</b> sur la carte pour afficher le <b>formulaire d'enregistrement</b> d'un risque.</li>
+       		<li><b>Clique droit</b> sur la carte pour afficher le <b>formulaire d'enregistrement</b> d'un risque.</li>
        		<li><b>Clique gauche</b> sur un des points de la carte <b>pour en savoir plus</b> sur celui-ci.</li>
        	</ul>
        	
@@ -106,5 +92,29 @@
     </div>
   </div>
 </div>
+    <!-- Placed at the end of the document so the pages load faster -->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="assets/js/bootstrap.min.js"></script>
+      
+    <script src="assets/js/menuActive.js"></script>  
+    <script type="text/javascript" src="<?php echo js_url('addPosition');?>"></script> 
+    <!-- special scripts -->
+    <?php foreach($js as $url): ?>
+    <script type="text/javascript" src="<?php echo $url; ?>"></script> 
+	<?php endforeach; ?>
+	
+<!--	Google analytics -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-27105689-2', 'cycliste-des-villes.fr');
+  ga('send', 'pageview');
+
+</script>
   </body>
 </html>

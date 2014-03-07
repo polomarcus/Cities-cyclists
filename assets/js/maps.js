@@ -1,15 +1,56 @@
-      function initialize() {
+﻿      function initialize() {
+    	  
+
+    	//Display all the marker from the DB
+		getAllMarkers();
+		 
         var theMarker = null; // THE marker, displayed on a user click
     	var markers = []; // this array will receive all the markers from the DB in ajax.
     	var infoBoxes = [];// infowindows for markers 	
     	var image = 'assets/img/pin.png'; //image for theMarker
-    	
-    	var mtp = new google.maps.LatLng(43.600, 3.883); //Montpellier GPS
-    	
-    	//Not used yet
-    	var domaine = new Object(); // new marker
-    	var coordinates = []; // coordonnées pour créers des bounds
+	    // Browser doesn't support Geolocation
+	    var pos = new google.maps.LatLng(43.600, 3.883); //Montpellier GPS
+	    
+        var mapOptions = {         
+                // center: pos, //Montpellier or Geolocation
+                 zoom: 12
+               };
+        
+        var map = new google.maps.Map(document.getElementById("map-canvas"),
+                mapOptions);
+
+        
+    	// Try HTML5 geolocation
+    	  if(navigator.geolocation) {
+    	    navigator.geolocation.getCurrentPosition(function(position) {
+    	      var pos = new google.maps.LatLng(position.coords.latitude,
+    	                                       position.coords.longitude);
+    	      console.log("Tu es géolocalisé");
+    	      
+    	      map.setCenter(pos);
+    	    }
+    	  , function() {
+    	      handleNoGeolocation(true);
+    	    });
+    	    
+    	  } else {
+    	    // Browser doesn't support Geolocation
+    	    handleNoGeolocation(false);
+    	  }
+
+
+    	function handleNoGeolocation(errorFlag) {
+    	  if (errorFlag) {
+    	    console.log('Error: The Geolocation service failed.');
+    	  } else {
+    		console.log('Error: Your browser doesn\'t support geolocation.');
+    	  }
     	  
+    	  var pos = new google.maps.LatLng(43.600, 3.883); //Montpellier GPS
+    	  map.setCenter(pos);
+    	}
+    	  
+    	
        	/* Place here because we can close the infowindow with the closeInfoBoxes because it's a var */
     	//Add data form display 
 		  var contentForm = '<div id="content">'+
@@ -18,7 +59,7 @@
 						      '<h2 id="firstHeading" class="firstHeading">Signaler un risque</h2>'+
 						      ''+
 							      '<form>'+	
-									  '<input class="col-lg-12" type="text" id="title" placeholder="Titre du risque" name="title"><br/>'+
+									  '<input class="col-lg-12" type="text" id="title" placeholder="Titre du risque *" name="title"><br/>'+
 									  '<textarea class="col-lg-12" rows="8" id="comment" name="comment" placeholder="Description du risque : Vitesse des voitures, espace insuffisant, dangereux par temps de pluie..."></textarea>' +
 					
 								      '<div class="col-lg-12">' +
@@ -33,13 +74,7 @@
 	          maxWidth: 400
 	   });	
 	      
-        var mapOptions = {         
-          center: mtp, //Montpellier
-          zoom: 12
-        };
         
-           var map = new google.maps.Map(document.getElementById("map-canvas"),
-                 mapOptions);
            
 	      //Event to add a position on the map
 	      google.maps.event.addListener(map, 'rightclick', function(event) {		       	
@@ -52,6 +87,13 @@
 	        });
 	     		     
 	
+	      //delete theMarker 
+	      google.maps.event.addListener(theMarker, 'click', function(event) {
+	    	    if(theMarker) {
+		    	    map.removeOverlay(theMarker);
+	    	    }
+	      });
+	      
 	     /** Place a new marker on the map when a click happens*/
 	     function placeMarker(location) {   		    	
 	    	//Close the other infobox
@@ -93,7 +135,7 @@
 	     /** Get all the markers from the DB*/
 	     function getAllMarkers(){
 	   		$.ajax({
-	   	   		url : "/Cycliste/index.php/index/getMarkers",
+	   	   		url : "/index.php/index/getMarkers",
 	   	   	   	type : "POST",
 	   	   	   	success: function(result) {
 			    	  var obj = jQuery.parseJSON(result);
@@ -172,9 +214,6 @@
 	    	 //theMarker
 	    	 infowindow.close();
 	     }
-
-	     //Display all the marker from the DB
-	     getAllMarkers();
       
       } //Initialize close
 
@@ -189,29 +228,33 @@
      	gps = $('#gps').val();
      	
     		$.ajax({
-    	   		url : "/Cycliste/index.php/index/addMarker",
+    	   		url : "/index.php/index/addMarker",
     	   	   	type : "POST",
     	   	   	data: {"title" : title, "comment" : comment, "gps" : gps},
  		      success: function(response) {
  		    	  if (response == 1){
  		    		  $("#ansForm").html('Merci de votre participation :) <br/> Cette zone est maintenant signalé sur la carte.');
+ 		     		
+ 		     		//replace html of the form
+ 		     		$("#content").html('<div class="displayData">'+
+ 		 							   		   '<h2>' + title + '</h2>'+
+ 		 							  		   '<p>' + comment + '</p>'+
+ 		 								   '</div>');
+ 		     		
+ 		          	//new marker on the current map
+ 		          	$('#newGPS').val(gps); //validate new marker on the current map
+ 		          	$('#newTitle').val(title); //validate new marker on the current map
+ 		          	$('#newComment').val(comment); //validate new marker on the current map
  		    	  }
  		    	  else  {
- 		    		 $("#ansForm").html('Une erreur s\'est produite (titre absent, commentaires trop court, point déjà ajouté...), mais vous allez y arriver !');
+ 		    		$("#ansForm").html('Une erreur s\'est produite (titre absent ou trop court, point déjà ajouté...), mais vous allez y arriver !');
+  		          	$('#newGPS').val(''); //validate new marker on the current map
+ 		          	$('#newTitle').val(''); //validate new marker on the current map
+ 		          	$('#newComment').val(''); //validate new marker on the current map
  		    	  }
  		      },
     		});
-    		
-    		//replace html of the form
-    		$("#content").html('<div class="displayData">'+
-							   		   '<h2>' + title + '</h2>'+
-							  		   '<p>' + comment + '</p>'+
-								   '</div>');
-    		
-         	//new marker on the current map
-         	$('#newGPS').val(gps); //validate new marker on the current map
-         	$('#newTitle').val(title); //validate new marker on the current map
-         	$('#newComment').val(comment); //validate new marker on the current map
+
 
          	//display Thanks for your help during 5 sec!
          	$('#ansDiv').fadeIn(1000);
